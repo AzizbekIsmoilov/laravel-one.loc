@@ -1,10 +1,23 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
 @section('content')
-    <h4 class="btn btn-info">Assalomu alaykum {{ 'bollar' }}</h4>
-    <p>Ismi : {{$array['name']??''}}</p>
-    <p>Familya : {{$array['fullname']??''}}</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Dashboard') }}</div>
 
-    <img src="{{ asset('upload/images/panda.jpg') }}" width="300px" alt="">
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
 
+                    {{ __('You are logged in!') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

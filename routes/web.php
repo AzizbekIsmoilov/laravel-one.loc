@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostsController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +22,10 @@ Route::get('/', function () {
 
 Route::get('/post',[PostController::class,'index']);
 
+//Route::group('posts',[
+//    Route::get('index',[PostsController::class,'index'])
+//]);
+Route::resource('posts',PostsController::class);
 Route::get('/home',function (){
     $array = [
         'name' => 'Azizbek',
@@ -28,3 +34,7 @@ Route::get('/home',function (){
     ];
     return view('home',['array' => $array]);
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
