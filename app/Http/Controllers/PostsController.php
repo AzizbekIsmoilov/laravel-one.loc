@@ -74,7 +74,8 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+//        $post = Post::
+//        return view('posts.edit',['post' => $post]);
     }
 
     /**

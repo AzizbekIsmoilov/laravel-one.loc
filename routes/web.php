@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Auth;
@@ -17,10 +18,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/post',[PostController::class,'index']);
+
 
 //Route::group('posts',[
 //    Route::get('index',[PostsController::class,'index'])
@@ -34,6 +36,19 @@ Route::get('/home',function (){
     ];
     return view('home',['array' => $array]);
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//Route::get('/','PageController@index');
+
+
+Route::get('/',[PageController::class, 'index']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
