@@ -23,7 +23,7 @@ class PostFactory extends Factory
     {
         return [
             'name' => $this->faker->unique()->name,
-            'fullname' => $this->faker->unique->company,
+            'fullname' => $this->faker->company(),
             'age' => $this->faker->longitude(10,100),
             'phone' => $this->faker->e164PhoneNumber,
             'reg_date' => $this->faker->dateTime,

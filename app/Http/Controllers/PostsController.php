@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Rules\PhoneNumber;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class PostsController extends Controller
 {
@@ -15,8 +16,25 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderByDesc('created_at')->paginate(20);
-        return view('posts.index',compact('posts'));
+        $cachedPosts = Redis::get(Post::className());
+        if(isset($cachedPosts)) {
+            $posts = json_decode($cachedPosts, FALSE);
+            return response()->json([
+                'status_code' => 201,
+                'message' => 'Fetched from redis',
+                'data' => $posts,
+            ]);
+        }else {
+//            $posts = Post::all();
+            $posts = Post::orderByDesc('created_at')->paginate(20);
+            Redis::set(Post::className(), json_encode($posts));
+            return response()->json([
+                'status_code' => 201,
+                'message' => 'Fetched from database',
+                'data' => $posts,
+            ]);
+        }
+//        return view('posts.index',compact('posts'));
     }
 
     /**
